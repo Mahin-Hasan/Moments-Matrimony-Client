@@ -1,13 +1,27 @@
 import { Link, NavLink } from "react-router-dom";
 import { useState } from "react";
+import useAuth from "../../hooks/useAuth";
+import Swal from "sweetalert2";
 
 const Navbar = () => {
     const [isNavOpen, setNavOpen] = useState(false);
     // console.log(isNavOpen);
+    const { user, logOut } = useAuth();
     const handleToggleNav = () => {
         setNavOpen(!isNavOpen);
     };
-
+    const handleLogOut = () => {
+        logOut()
+            .then(() => {
+                Swal.fire({
+                    icon: "success",
+                    title: 'Logged Out',
+                    showConfirmButton: false,
+                    timer: 2000
+                });
+            })
+            .catch(error => console.log(error))
+    }
     const navigations = (
         <>
             <li><NavLink to="/" className={({ isActive, isPending }) =>
@@ -44,14 +58,43 @@ const Navbar = () => {
                         <ul className={`items-center space-x-3 hidden lg:flex`}>
                             {navigations}
                         </ul>
-                        <ul className={`items-center space-x-3 p-3 lg:hidden ${isNavOpen ? 'flex flex-col absolute right-0 top-0 w-40 mt-12 mr-12 bg-sky-200' : 'hidden'}`}>
+                        <ul className={`items-center space-x-3 p-3 lg:hidden z-10 ${isNavOpen ? 'flex flex-col absolute right-0 top-0 w-40 mt-12 mr-12 bg-sky-200' : 'hidden'}`}>
                             {navigations}
-                            <span className="self-center px-4 py-2 rounded text-blue-700 font-bold">Log In</span>
+                            {
+                                user ?
+                                    <button onClick={handleLogOut} className="self-center px-4 py-2 rounded text-red-700 underline font-bold">Log Out</button>
+                                    :
+                                    <span className="self-center px-4 py-2 rounded text-blue-700 font-bold">Log In</span>
+                            }
                         </ul>
                     </div>
                     <div className="items-center flex-shrink-0 hidden lg:flex">
-                        <button className="self-center px-4 py-2 rounded text-blue-700 font-bold">Log in</button>
-                        <button className="self-center px-4 py-2 font-semibold rounded bg-violet-600 text-gray-50">Sign up</button>
+                        {/* https://m.media-amazon.com/images/I/61NP12cSlQL._AC_UF1000,1000_QL80_.jpg */}
+                        {
+                            user ?
+                                <div className="flex items-center">
+                                    <div className="relative flex-shrink-0">
+                                        <img src={user?.photoURL} alt="" className="w-12 h-12 border rounded-full bg-gray-500 border-gray-300" />
+                                        <span className="absolute bottom-0 right-0 w-4 h-4 bg-green-600 border rounded-full text-gray-800 border-gray-50"></span>
+                                    </div>
+                                    <div>
+                                        <span>{user.displayName}</span>
+                                        <button onClick={handleLogOut} className="self-center px-4 py-2 rounded text-red-700 underline font-bold">Log Out</button>
+                                    </div>
+                                </div>
+                                :
+                                <div>
+                                    <Link to='/login'><button className="self-center px-4 py-2 rounded text-blue-700 font-bold">Log in</button></Link>
+                                    <Link to='/signup'>
+                                        <button className="self-center px-4 py-2 font-semibold rounded bg-violet-600 text-gray-50">Sign up</button>
+                                    </Link>
+                                </div>
+                            // <button className="self-center px-4 py-2 rounded text-blue-700 font-bold">Log in</button>
+                        }
+                        {/* <button className="self-center px-4 py-2 rounded text-blue-700 font-bold">Log in</button> */}
+                        {/* <Link to='/signup'>
+                            <button className="self-center px-4 py-2 font-semibold rounded bg-violet-600 text-gray-50">Sign up</button>
+                        </Link> */}
                     </div>
                     <button className="p-4 lg:hidden" onClick={handleToggleNav}>
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" className="w-4 h-4 text-gray-800">

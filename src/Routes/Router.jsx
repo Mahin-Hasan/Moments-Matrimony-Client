@@ -4,6 +4,8 @@ import Home from "../pages/Home/Home/Home";
 import BioDatas from "../pages/BioDatas/BioDatas";
 import AboutUs from "../pages/AboutUs/AboutUs";
 import Contact from "../pages/Contact/Contact";
+import SignUp from "../pages/SignUp/SignUp";
+import Login from "../pages/Login/Login";
 
 export const router = createBrowserRouter([
     {
@@ -15,16 +17,28 @@ export const router = createBrowserRouter([
                 element: <Home></Home>
             },
             {
-                path: '/biodatas',
+                path: 'biodatas',
                 element: <BioDatas></BioDatas>
             },
             {
-                path: '/about',
+                path: 'about',
                 element: <AboutUs></AboutUs>
             },
             {
-                path: '/contact',
+                path: 'contact',
                 element: <Contact></Contact>
+            },
+            {
+                path: 'contact',
+                element: <Contact></Contact>
+            },
+            {
+                path: 'signup',
+                element: <SignUp></SignUp>
+            },
+            {
+                path: 'login',
+                element: <Login></Login>
             },
         ]
     }
