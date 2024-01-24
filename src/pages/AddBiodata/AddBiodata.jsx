@@ -3,11 +3,14 @@ import useAuth from "../../hooks/useAuth";
 import { useEffect, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import useAxiosPublic from "../../hooks/useAxiosPublic";
+import Swal from "sweetalert2";
 
 const AddBiodata = () => {
     const { user } = useAuth();
     const [loggedUser, setLoggedUser] = useState('');
     const axiosPublic = useAxiosPublic();
+
+
     const { data: biodatas = [], refetch } = useQuery({
         queryKey: ['biodatas'],
         queryFn: async () => {
@@ -19,9 +22,9 @@ const AddBiodata = () => {
     useEffect(() => {
         refetch();
         setLoggedUser(user?.email || '');
-    }, [user,refetch]);
+    }, [user, refetch]);
 
-    
+
     console.log(loggedUser);
     const dynamicBioID = biodatas.length + 1;
     console.log(dynamicBioID);
@@ -34,10 +37,48 @@ const AddBiodata = () => {
         // formState: { errors },
     } = useForm();
 
-    const onSubmit = (data) => {
-        
+    const onSubmit = async (data) => {
+
         console.log(data);
-        reset();
+        /*
+biodataID, biodataType, contactEmail, dateOfBirth, expectedPartnerAge, expectedPartnerHeight, expectedPartnerWeight, fathersName, mobileNumber, mothersName, occupation, permanentDivision, profileImg, presentDivision, race, yourAge, yourHeight, yourName, yourWeight
+       */
+        const bioDataInformation = {
+            biodataID: dynamicBioID,
+            biodataType: data.biodataType,
+            yourName: data.yourName,
+            profileImg: data.profileImg,
+            dateOfBirth: data.dateOfBirth,
+            yourHeight: data.yourHeight,
+            yourWeight: data.yourWeight,
+            yourAge: parseInt(data.yourAge),
+            occupation: data.occupation,
+            race: data.race,
+            fathersName: data.fathersName,
+            mothersName: data.mothersName,
+            permanentDivision: data.permanentDivision,
+            presentDivision: data.presentDivision,
+            expectedPartnerAge: parseInt(data.expectedPartnerAge),
+            expectedPartnerHeight: data.expectedPartnerHeight,
+            contactEmail: user.email,
+            mobileNumber: parseInt(data.mobileNumber),
+        }
+        console.log(bioDataInformation);
+        const bioDataRes = await axiosPublic.post('/biodatas', bioDataInformation);
+        console.log(bioDataRes.data);
+        if (bioDataRes.data.insertedId) {
+            reset();
+            // show popup sucess
+            Swal.fire({
+                position: "top-end",
+                icon: "success",
+                title: `Biodata of ${data.yourName} is added`,
+                showConfirmButton: false,
+                timer: 1500
+            });
+        }
+
+        // reset();
         refetch();
     }
     return (
@@ -53,7 +94,7 @@ const AddBiodata = () => {
                                 <div>
                                     <h1>Email Used:</h1>
                                     <span>{user?.email}</span>
-                                    <input
+                                    {/* <input
                                         type="hidden"
                                         {...register('contactEmail', { value: `${loggedUser}` })}
                                     />
@@ -61,7 +102,7 @@ const AddBiodata = () => {
                                         type="hidden"
                                         // {...register('contactEmail', { defaultValue: 'asdasd' })}
                                         {...register('biodataID', { value: `${dynamicBioID}` })}
-                                    />
+                                    /> */}
                                 </div>
 
                             </div>
@@ -302,9 +343,9 @@ const AddBiodata = () => {
                                 <div className="col-span-6">
                                     <label className="block text-sm font-medium text-gray-700">Photo URL </label>
                                     <input
-                                    placeholder="Your Photo URL"
+                                        placeholder="Your Photo URL"
                                         type="text"
-                                        {...register("photoURL", { required: true })}
+                                        {...register("profileImg", { required: true })}
                                         className="w-full rounded-md focus:ring focus:ri focus:ri border-gray-300 text-gray-900"
                                     />
 
