@@ -36,7 +36,7 @@ const Navbar = () => {
             <li><NavLink to="/contact" className={({ isActive, isPending }) =>
                 isPending ? "pending" : isActive ? "text-blue-500 border-b-2 border-blue-800 rounded-none px-2 py-1" : "text-Blue-700 px-2 py-1"
             }>Contact US</NavLink></li>
-            <li><NavLink to="/dashboard" className={({ isActive, isPending }) =>
+            <li><NavLink to="/dashboard/viewBiodata" className={({ isActive, isPending }) =>
                 isPending ? "pending" : isActive ? "text-blue-500 border-b-2 border-blue-800 rounded-none px-2 py-1" : "text-Blue-700 px-2 py-1"
             }>DashBoard</NavLink></li>
         </>
@@ -78,7 +78,7 @@ const Navbar = () => {
                                         <span className="absolute bottom-0 right-0 w-4 h-4 bg-green-600 border rounded-full text-gray-800 border-gray-50"></span>
                                     </div>
                                     <div>
-                                        <span>{user.displayName}</span>
+                                        <span>{user?.displayName}</span>
                                         <button onClick={handleLogOut} className="self-center px-4 py-2 rounded text-red-700 underline font-bold">Log Out</button>
                                     </div>
                                 </div>

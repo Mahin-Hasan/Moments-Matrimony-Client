@@ -4,10 +4,10 @@ import Footer from "../Shared/Footer/Footer";
 
 const Main = () => {
     const location = useLocation();
-    const hideNavFoot = location.pathname.includes('signup')
+    const hideNavFoot = location.pathname.includes('signup') || location.pathname.includes('login')
     return (
         <div className="max-w-screen-xl mx-auto">
-            <Navbar></Navbar>
+            {hideNavFoot || <Navbar></Navbar>}
             <Outlet></Outlet>
             {hideNavFoot || <Footer></Footer>}
         </div>
