@@ -11,6 +11,7 @@ import EditBiodata from "../pages/EditBiodata/EditBiodata";
 import ViewBiodata from "../pages/ViewBiodata/ViewBiodata";
 import ContactRequest from "../pages/ContactRequest/ContactRequest";
 import FavouriteBio from "../pages/FavouriteBio/FavouriteBio";
+import AddBiodata from "../pages/AddBiodata/AddBiodata";
 
 export const router = createBrowserRouter([
     {
@@ -52,6 +53,10 @@ export const router = createBrowserRouter([
         element: <Dashboard></Dashboard>,
         children:[
             // users route
+            {
+                path: 'addBiodata',
+                element: <AddBiodata></AddBiodata>
+            },
             {
                 path: 'editBiodata',
                 element: <EditBiodata></EditBiodata>
