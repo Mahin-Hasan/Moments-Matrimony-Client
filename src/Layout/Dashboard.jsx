@@ -8,9 +8,9 @@ const Dashboard = () => {
     const { user } = useAuth();
     return (
         <div className="max-w-screen-xl mx-auto">
-            <div className="flex">
+            <div className="flex flex-col sm:flex-row">
                 {/*sidebar  */}
-                <div className="h-full p-3 space-y-2 w-72 bg-gray-50 text-gray-800">
+                <div className="h-full p-3 space-y-2 w-full sm:w-72 bg-gray-50 text-gray-800">
                     <div className="flex items-center p-2 space-x-4">
                         <img src={user?.photoURL} alt="" className="w-12 h-12 rounded-full bg-gray-500" />
                         <div>

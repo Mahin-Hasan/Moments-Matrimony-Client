@@ -337,7 +337,7 @@ biodataID, biodataType, contactEmail, dateOfBirth, expectedPartnerAge, expectedP
                                     <label className="text-sm">Mobile Number</label>
                                     <input
                                         {...register("mobileNumber", { required: true })}
-                                        type="number" placeholder="Your age" className="w-full rounded-md focus:ring focus:ri focus:ri border-gray-300 text-gray-900" />
+                                        type="number" placeholder="Your number" className="w-full rounded-md focus:ring focus:ri focus:ri border-gray-300 text-gray-900" />
                                 </div>
                                 {/* user photo URL */}
                                 <div className="col-span-6">
