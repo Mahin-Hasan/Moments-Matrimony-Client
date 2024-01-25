@@ -9,7 +9,7 @@ import Swal from "sweetalert2";
 
 const EditBiodata = () => {
     const axiosPublic = useAxiosPublic();
-
+    const [biodatas, , refetch] = useBiodata(); //2nd parameter empty cz not using
     // const { data: biodatas = [], refetch } = useQuery({
     //     queryKey: ['biodatas'],
     //     queryFn: async () => {
@@ -17,7 +17,7 @@ const EditBiodata = () => {
     //         return res.data;
     //     }
     // })
-    const [biodatas, refetch] = useBiodata();
+
 
     //delete function
     const handleDeleteBiodata = biodata => {
@@ -40,7 +40,7 @@ const EditBiodata = () => {
                         title: "Deleted!",
                         text: `Biodata of ${biodata.yourName} has been deleted.`,
                         icon: "success"
-                      });
+                    });
                 }
             }
         });
@@ -101,12 +101,14 @@ const EditBiodata = () => {
                                     <td className="whitespace-nowrap px-4 py-2 text-gray-700">{biodata.occupation}</td>
                                     <td className="whitespace-nowrap px-4 py-2">
                                         <div className="flex items-center gap-1">
-                                            <button
-                                                className="inline-block rounded bg-indigo-600 px-3 py-3 text-xs font-medium text-white hover:bg-indigo-700"
-                                            >
-                                                <FaEdit className="text-lg" />
+                                            <Link to={`/dashboard/updateBiodata/${biodata._id}`}>
+                                                <button
+                                                    className="inline-block rounded bg-indigo-600 px-3 py-3 text-xs font-medium text-white hover:bg-indigo-700"
+                                                >
+                                                    <FaEdit className="text-lg" />
 
-                                            </button>
+                                                </button>
+                                            </Link>
                                             <button onClick={() => handleDeleteBiodata(biodata)}
                                                 className="inline-block rounded-full border border-rose-600 bg-rose-600 p-3 text-white hover:bg-transparent hover:text-rose-600 focus:outline-none focus:ring active:text-rose-500"
                                                 href="/download"

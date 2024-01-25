@@ -13,6 +13,11 @@ import ContactRequest from "../pages/ContactRequest/ContactRequest";
 import FavouriteBio from "../pages/FavouriteBio/FavouriteBio";
 import AddBiodata from "../pages/AddBiodata/AddBiodata";
 import PrivateRoute from "./PrivateRoute";
+import UpdateBiodata from "../pages/UpdateBiodata/UpdateBiodata";
+import AdminDashboard from "../pages/AdminDashboard/AdminDashboard";
+import ManageUsers from "../pages/ManageUsers/ManageUsers";
+import ApprovedPremium from "../pages/ApprovedPremium/ApprovedPremium";
+import ApproveContact from "../pages/ApproveContact/ApproveContact";
 
 export const router = createBrowserRouter([
     {
@@ -48,7 +53,7 @@ export const router = createBrowserRouter([
     {
         path: 'dashboard',
         element: <PrivateRoute><Dashboard></Dashboard></PrivateRoute>,
-        children:[
+        children: [
             // users route
             {
                 path: 'addBiodata',
@@ -59,8 +64,14 @@ export const router = createBrowserRouter([
                 element: <EditBiodata></EditBiodata>
             },
             {
+                path: 'updateBiodata/:id',
+                element: <UpdateBiodata></UpdateBiodata>,
+                loader: ({ params }) => fetch(`http://localhost:5001/biodatas/${params.id}`)
+            },
+            {
                 path: 'viewBiodata',
                 element: <PrivateRoute><ViewBiodata></ViewBiodata></PrivateRoute>
+
             },
             {
                 path: 'contactRequest',
@@ -71,6 +82,22 @@ export const router = createBrowserRouter([
                 element: <FavouriteBio></FavouriteBio>
             },
             //admin route
+            {
+                path: 'adminDashboard',
+                element: <AdminDashboard></AdminDashboard>
+            },
+            {
+                path: 'manageUsers',
+                element: <ManageUsers></ManageUsers>
+            },
+            {
+                path: 'approvedPremium',
+                element: <ApprovedPremium></ApprovedPremium>
+            },
+            {
+                path: 'approvedContact',
+                element: <ApproveContact></ApproveContact>
+            },
         ]
     }
 ]);

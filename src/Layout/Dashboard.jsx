@@ -2,6 +2,8 @@ import { NavLink, Outlet } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
 import { IoMdContacts } from "react-icons/io";
 import { FaEdit, FaHeart, FaHome, FaSearch } from "react-icons/fa";
+import { MdDashboard, MdWorkspacePremium } from "react-icons/md";
+import { RiContactsFill } from "react-icons/ri";
 
 
 const Dashboard = () => {
@@ -21,12 +23,13 @@ const Dashboard = () => {
                         </div>
                     </div>
                     <div className="divide-y divide-gray-300">
+                        {/* User */}
                         <ul className="pt-2 pb-4 space-y-1 text-sm">
                             <li>
                                 <NavLink to='/dashboard/viewBiodata' className={({ isActive, isPending }) =>
                                     isPending ? "pending" : isActive ? "flex items-center p-2 space-x-3 rounded-md bg-blue-100 font-bold text-blue-600" : "flex items-center p-2 space-x-3 rounded-md"
                                 }>
-                                    <FaSearch />
+                                    <FaSearch className="w-5 h-5" />
                                     <span>View Biodata</span>
                                 </NavLink>
                             </li>
@@ -56,9 +59,46 @@ const Dashboard = () => {
                                 </NavLink>
                             </li>
                         </ul>
+                        {/* Admin Routes */}
+                        <ul className="pt-2 pb-4 space-y-1 text-sm">
+                            <li>
+                                <NavLink to='/dashboard/adminDashboard' className={({ isActive, isPending }) =>
+                                    isPending ? "pending" : isActive ? "flex items-center p-2 space-x-3 rounded-md bg-blue-100 font-bold text-blue-600" : "flex items-center p-2 space-x-3 rounded-md"
+                                }>
+                                    <MdDashboard className="w-5 h-5" />
+                                    <span>Admin Dashboard</span>
+                                </NavLink>
+                            </li>
+                            <li className="bg-gray-100 text-gray-900">
+                                <NavLink to='/dashboard/manageUsers' className={({ isActive, isPending }) =>
+                                    isPending ? "pending" : isActive ? "flex items-center p-2 space-x-3 rounded-md bg-blue-100 font-bold text-blue-600" : "flex items-center p-2 space-x-3 rounded-md"
+                                }>
+                                    <FaEdit className="w-5 h-5" />
+
+                                    <span>Manage User</span>
+                                </NavLink>
+                            </li>
+                            <li>
+                                <NavLink to='/dashboard/approvedPremium' className={({ isActive, isPending }) =>
+                                    isPending ? "pending" : isActive ? "flex items-center p-2 space-x-3 rounded-md bg-blue-100 font-bold text-blue-600" : "flex items-center p-2 space-x-3 rounded-md"
+                                }>
+                                    <MdWorkspacePremium className="w-5 h-5" />
+                                    <span>Approved Premium</span>
+                                </NavLink>
+                            </li>
+                            <li>
+                                <NavLink to='/dashboard/approvedContact' className={({ isActive, isPending }) =>
+                                    isPending ? "pending" : isActive ? "flex items-center p-2 space-x-3 rounded-md bg-blue-100 font-bold text-blue-600" : "flex items-center p-2 space-x-3 rounded-md"
+                                }>
+                                    <RiContactsFill className="w-5 h-5" />
+                                    <span>Approved Contact</span>
+                                </NavLink>
+                            </li>
+                        </ul>
+                        {/* Common routes */}
                         <ul className="pt-4 pb-2 space-y-1 text-sm">
                             <li>
-                                <NavLink to='/'className="flex items-center p-2 space-x-3 rounded-md">
+                                <NavLink to='/' className="flex items-center p-2 space-x-3 rounded-md">
                                     <FaHome className="w-5 h-5" />
                                     <span>Home</span>
                                 </NavLink>
@@ -76,7 +116,7 @@ const Dashboard = () => {
                     </div>
                 </div>
                 {/* outlets */}
-                <div className="flex-1 p-6">
+                <div className="flex-1 ">
                     <Outlet></Outlet>
                 </div>
             </div>
