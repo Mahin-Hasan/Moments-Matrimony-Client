@@ -12,6 +12,7 @@ import ViewBiodata from "../pages/ViewBiodata/ViewBiodata";
 import ContactRequest from "../pages/ContactRequest/ContactRequest";
 import FavouriteBio from "../pages/FavouriteBio/FavouriteBio";
 import AddBiodata from "../pages/AddBiodata/AddBiodata";
+import PrivateRoute from "./PrivateRoute";
 
 export const router = createBrowserRouter([
     {
@@ -35,10 +36,6 @@ export const router = createBrowserRouter([
                 element: <Contact></Contact>
             },
             {
-                path: 'contact',
-                element: <Contact></Contact>
-            },
-            {
                 path: 'signup',
                 element: <SignUp></SignUp>
             },
@@ -50,7 +47,7 @@ export const router = createBrowserRouter([
     },
     {
         path: 'dashboard',
-        element: <Dashboard></Dashboard>,
+        element: <PrivateRoute><Dashboard></Dashboard></PrivateRoute>,
         children:[
             // users route
             {
@@ -63,7 +60,7 @@ export const router = createBrowserRouter([
             },
             {
                 path: 'viewBiodata',
-                element: <ViewBiodata></ViewBiodata>
+                element: <PrivateRoute><ViewBiodata></ViewBiodata></PrivateRoute>
             },
             {
                 path: 'contactRequest',
@@ -73,6 +70,7 @@ export const router = createBrowserRouter([
                 path: 'favouriteBiodata',
                 element: <FavouriteBio></FavouriteBio>
             },
+            //admin route
         ]
     }
 ]);

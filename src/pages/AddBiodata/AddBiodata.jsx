@@ -60,6 +60,7 @@ biodataID, biodataType, contactEmail, dateOfBirth, expectedPartnerAge, expectedP
             presentDivision: data.presentDivision,
             expectedPartnerAge: parseInt(data.expectedPartnerAge),
             expectedPartnerHeight: data.expectedPartnerHeight,
+            expectedPartnerWeight: data.expectedPartnerWeight,
             contactEmail: user.email,
             mobileNumber: parseInt(data.mobileNumber),
         }
