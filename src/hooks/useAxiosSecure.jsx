@@ -10,10 +10,11 @@ const axiosSecure = axios.create({
 //trying interceptors for secure api
 const useAxiosSecure = () => {
     const navigate = useNavigate();
-    const {logOut} = useAuth();
-    
+    const { logOut } = useAuth();
+
     axiosSecure.interceptors.request.use(function (config) {
         const token = localStorage.getItem('user-token')
+        // console.log('test interceptor', token);
         config.headers.authorization = `Bearer ${token}`;
         return config;
     }, function (error) {
@@ -23,11 +24,11 @@ const useAxiosSecure = () => {
     //intercepts 401 and 403 status
     axiosSecure.interceptors.response.use(function (response) {
         return response;
-    }, async(error) => {
+    }, async (error) => {
         const status = error.response.status;
         console.log('status error in the interceptor', status);
         if (status === 401 || status === 403) {
-            await logOut();
+            await logOut(); //logging out user when error code is set to status
             navigate('/login')
         }
 

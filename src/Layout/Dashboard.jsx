@@ -4,10 +4,13 @@ import { IoMdContacts } from "react-icons/io";
 import { FaEdit, FaHeart, FaHome, FaSearch } from "react-icons/fa";
 import { MdDashboard, MdWorkspacePremium } from "react-icons/md";
 import { RiContactsFill } from "react-icons/ri";
+import useAdmin from "../hooks/useAdmin";
 
 
 const Dashboard = () => {
     const { user } = useAuth();
+    const [isAdmin, isAdminLoading] = useAdmin();
+
     return (
         <div className="max-w-screen-xl mx-auto">
             <div className="flex flex-col sm:flex-row">
@@ -25,7 +28,82 @@ const Dashboard = () => {
                     <div className="divide-y divide-gray-300">
                         {/* User */}
                         <ul className="pt-2 pb-4 space-y-1 text-sm">
-                            <li>
+                            {
+                                isAdmin ?
+                                    <>
+                                        <li>
+                                            <NavLink to='/dashboard/adminDashboard' className={({ isActive, isPending }) =>
+                                                isPending ? "pending" : isActive ? "flex items-center p-2 space-x-3 rounded-md bg-blue-100 font-bold text-blue-600" : "flex items-center p-2 space-x-3 rounded-md"
+                                            }>
+                                                <MdDashboard className="w-5 h-5" />
+                                                <span>Admin Dashboard</span>
+                                            </NavLink>
+                                        </li>
+                                        <li className="bg-gray-100 text-gray-900">
+                                            <NavLink to='/dashboard/manageUsers' className={({ isActive, isPending }) =>
+                                                isPending ? "pending" : isActive ? "flex items-center p-2 space-x-3 rounded-md bg-blue-100 font-bold text-blue-600" : "flex items-center p-2 space-x-3 rounded-md"
+                                            }>
+                                                <FaEdit className="w-5 h-5" />
+
+                                                <span>Manage User</span>
+                                            </NavLink>
+                                        </li>
+                                        <li>
+                                            <NavLink to='/dashboard/approvedPremium' className={({ isActive, isPending }) =>
+                                                isPending ? "pending" : isActive ? "flex items-center p-2 space-x-3 rounded-md bg-blue-100 font-bold text-blue-600" : "flex items-center p-2 space-x-3 rounded-md"
+                                            }>
+                                                <MdWorkspacePremium className="w-5 h-5" />
+                                                <span>Approved Premium</span>
+                                            </NavLink>
+                                        </li>
+                                        <li>
+                                            <NavLink to='/dashboard/approvedContact' className={({ isActive, isPending }) =>
+                                                isPending ? "pending" : isActive ? "flex items-center p-2 space-x-3 rounded-md bg-blue-100 font-bold text-blue-600" : "flex items-center p-2 space-x-3 rounded-md"
+                                            }>
+                                                <RiContactsFill className="w-5 h-5" />
+                                                <span>Approved Contact</span>
+                                            </NavLink>
+                                        </li>
+                                    </>
+                                    :
+                                    <>
+                                        <li>
+                                            <NavLink to='/dashboard/viewBiodata' className={({ isActive, isPending }) =>
+                                                isPending ? "pending" : isActive ? "flex items-center p-2 space-x-3 rounded-md bg-blue-100 font-bold text-blue-600" : "flex items-center p-2 space-x-3 rounded-md"
+                                            }>
+                                                <FaSearch className="w-5 h-5" />
+                                                <span>View Biodata</span>
+                                            </NavLink>
+                                        </li>
+                                        <li className="bg-gray-100 text-gray-900">
+                                            <NavLink to='/dashboard/editBiodata' className={({ isActive, isPending }) =>
+                                                isPending ? "pending" : isActive ? "flex items-center p-2 space-x-3 rounded-md bg-blue-100 font-bold text-blue-600" : "flex items-center p-2 space-x-3 rounded-md"
+                                            }>
+                                                <FaEdit className="w-5 h-5" />
+
+                                                <span>Edit BioData</span>
+                                            </NavLink>
+                                        </li>
+                                        <li>
+                                            <NavLink to='/dashboard/contactRequest' className={({ isActive, isPending }) =>
+                                                isPending ? "pending" : isActive ? "flex items-center p-2 space-x-3 rounded-md bg-blue-100 font-bold text-blue-600" : "flex items-center p-2 space-x-3 rounded-md"
+                                            }>
+                                                <IoMdContacts className="w-5 h-5" />
+                                                <span>Contact Request</span>
+                                            </NavLink>
+                                        </li>
+                                        <li>
+                                            <NavLink to='/dashboard/favouriteBiodata' className={({ isActive, isPending }) =>
+                                                isPending ? "pending" : isActive ? "flex items-center p-2 space-x-3 rounded-md bg-blue-100 font-bold text-blue-600" : "flex items-center p-2 space-x-3 rounded-md"
+                                            }>
+                                                <FaHeart className="w-5 h-5" />
+                                                <span>Favourites Biodata</span>
+                                            </NavLink>
+                                        </li>
+                                    </>
+                            }
+
+                            {/* <li>
                                 <NavLink to='/dashboard/viewBiodata' className={({ isActive, isPending }) =>
                                     isPending ? "pending" : isActive ? "flex items-center p-2 space-x-3 rounded-md bg-blue-100 font-bold text-blue-600" : "flex items-center p-2 space-x-3 rounded-md"
                                 }>
@@ -57,10 +135,10 @@ const Dashboard = () => {
                                     <FaHeart className="w-5 h-5" />
                                     <span>Favourites Biodata</span>
                                 </NavLink>
-                            </li>
+                            </li> */}
                         </ul>
                         {/* Admin Routes */}
-                        <ul className="pt-2 pb-4 space-y-1 text-sm">
+                        {/* <ul className="pt-2 pb-4 space-y-1 text-sm">
                             <li>
                                 <NavLink to='/dashboard/adminDashboard' className={({ isActive, isPending }) =>
                                     isPending ? "pending" : isActive ? "flex items-center p-2 space-x-3 rounded-md bg-blue-100 font-bold text-blue-600" : "flex items-center p-2 space-x-3 rounded-md"
@@ -94,7 +172,7 @@ const Dashboard = () => {
                                     <span>Approved Contact</span>
                                 </NavLink>
                             </li>
-                        </ul>
+                        </ul> */}
                         {/* Common routes */}
                         <ul className="pt-4 pb-2 space-y-1 text-sm">
                             <li>

@@ -32,9 +32,8 @@ const EditBiodata = () => {
         }).then(async (result) => {
             if (result.isConfirmed) {
                 const res = await axiosPublic.delete(`/biodatas/${biodata._id}`);
-                console.log(res.data); //delete operation only works for the item that is added and has object id in mongo db
+                console.log(res.data); 
                 if (res.data.deletedCount > 0) {
-                    //refetch to update deleted state
                     refetch();
                     Swal.fire({
                         title: "Deleted!",
@@ -47,13 +46,12 @@ const EditBiodata = () => {
     }
 
     return (
-        <div>
+        <div className="mt-10">
             <div className="flex justify-end">
                 {/* add Biodata */}
                 <Link to='/dashboard/addBiodata'>
                     <button
-                        className="group flex items-center justify-between gap-4 rounded-lg border border-green-600 bg-green-600 px-5 py-3 transition-colors hover:bg-transparent focus:outline-none focus:ring"
-                        href="/download"
+                        className="group flex items-center justify-between gap-4 rounded-lg border border-green-600 bg-green-600 px-5 py-3 transition-colors hover:bg-transparent focus:outline-none focus:ring mb-10"
                     >
                         <span
                             className="font-medium text-white transition-colors group-hover:text-green-600 group-active:text-green-500"
@@ -77,7 +75,7 @@ const EditBiodata = () => {
                         <thead className="ltr:text-left rtl:text-right">
                             <tr>
                                 <th className="font-medium text-gray-900">SL #</th>
-                                <th className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">Profile</th>
+                                <th className="whitespace-nowrap px-4 py-2 font-medium text-gray-900 ">Profile</th>
                                 <th className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">Name</th>
                                 <th className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">Date of Birth</th>
                                 <th className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">Role</th>

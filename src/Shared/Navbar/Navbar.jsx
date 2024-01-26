@@ -2,11 +2,13 @@ import { Link, NavLink } from "react-router-dom";
 import { useState } from "react";
 import useAuth from "../../hooks/useAuth";
 import Swal from "sweetalert2";
+import useAdmin from "../../hooks/useAdmin";
 
 const Navbar = () => {
     const [isNavOpen, setNavOpen] = useState(false);
     // console.log(isNavOpen);
     const { user, logOut } = useAuth();
+    const [isAdmin] = useAdmin();
     const handleToggleNav = () => {
         setNavOpen(!isNavOpen);
     };
@@ -36,9 +38,18 @@ const Navbar = () => {
             <li><NavLink to="/contact" className={({ isActive, isPending }) =>
                 isPending ? "pending" : isActive ? "text-blue-500 border-b-2 border-blue-800 rounded-none px-2 py-1" : "text-Blue-700 px-2 py-1"
             }>Contact US</NavLink></li>
-            <li><NavLink to="/dashboard/viewBiodata" className={({ isActive, isPending }) =>
-                isPending ? "pending" : isActive ? "text-blue-500 border-b-2 border-blue-800 rounded-none px-2 py-1" : "text-Blue-700 px-2 py-1"
-            }>DashBoard</NavLink></li>
+
+
+            {
+                user && !isAdmin && <li><NavLink to="/dashboard/viewBiodata" className={({ isActive, isPending }) =>
+                    isPending ? "pending" : isActive ? "text-blue-500 border-b-2 border-blue-800 rounded-none px-2 py-1" : "text-Blue-700 px-2 py-1"
+                }>DashBoard</NavLink></li>
+            }
+            {
+                user && isAdmin && <li><NavLink to="/dashboard/adminDashboard" className={({ isActive, isPending }) =>
+                    isPending ? "pending" : isActive ? "text-blue-500 border-b-2 border-blue-800 rounded-none px-2 py-1" : "text-Blue-700 px-2 py-1"
+                }>DashBoard</NavLink></li>
+            }
         </>
     );
 
