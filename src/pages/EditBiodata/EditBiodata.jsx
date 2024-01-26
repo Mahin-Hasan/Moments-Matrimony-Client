@@ -111,7 +111,6 @@ const EditBiodata = () => {
                                             </Link>
                                             <button onClick={() => handleDeleteBiodata(biodata)}
                                                 className="inline-block rounded-full border border-rose-600 bg-rose-600 p-3 text-white hover:bg-transparent hover:text-rose-600 focus:outline-none focus:ring active:text-rose-500"
-                                                href="/download"
                                             >
                                                 <RiDeleteBin6Fill className="text-lg" />
                                             </button>

@@ -13,7 +13,7 @@ const Login = () => {
     } = useForm();
     const { signIn,googleSignIn } = useAuth();
     const axiosPublic = useAxiosPublic();
-    const navigate = useNavigate(); //
+    const navigate = useNavigate(); 
 
 
     const onSubmit = (data) => {
