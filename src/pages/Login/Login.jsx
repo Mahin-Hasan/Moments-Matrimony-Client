@@ -11,9 +11,9 @@ const Login = () => {
         reset,
         formState: { errors },
     } = useForm();
-    const { signIn,googleSignIn } = useAuth();
+    const { signIn, googleSignIn } = useAuth();
     const axiosPublic = useAxiosPublic();
-    const navigate = useNavigate(); 
+    const navigate = useNavigate();
 
 
     const onSubmit = (data) => {
@@ -33,28 +33,27 @@ const Login = () => {
             })
     }
     // google sign in 
-    const handleSocialSignIn =() =>{
+    const handleSocialSignIn = () => {
         googleSignIn()
-        .then(res => {
-            console.log(res.user);
-            const userInfo ={
-                email: res.user?.email,
-                name: res.user?.displayName
-            }
-            axiosPublic.post('/users', userInfo)
-            .then(res=>{
-                console.log(res.data);
-                if (res.data.insertedId) {
-                    Swal.fire({
-                        icon: "success",
-                        title: "Logged in using Google",
-                        showConfirmButton: false,
-                        timer: 1500
-                      });
-                    navigate('/');
+            .then(res => {
+                const userInfo = {
+                    email: res.user?.email,
+                    name: res.user?.displayName
                 }
+                axiosPublic.post('/users', userInfo)
+                    .then(res => {
+                        console.log(res.data);
+                        if (res.data.insertedId) {
+                            Swal.fire({
+                                icon: "success",
+                                title: "added users info",
+                                showConfirmButton: false,
+                                timer: 1500
+                            });
+                        }
+                        navigate('/');
+                    })
             })
-        })
     }
 
     return (
