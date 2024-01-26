@@ -2,9 +2,8 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 const PremiumMember = ({ premiumBiodata }) => {
-    const {_id, bioId, profile, name, bioType, permanentDiv, work, age,originalID
-    } = premiumBiodata;
-    console.log('test',premiumBiodata);
+    const { _id, bioId, profile, name, bioType, permanentDiv, work, age, originalID } = premiumBiodata;
+    console.log('test', premiumBiodata);
     return (
         <div className="flex flex-col justify-center w-full px-8 mx-6 my-12 text-center rounded-md md:w-96 lg:w-80 xl:w-64 bg-gray-800 text-gray-100">
             <img alt="" className="self-center flex-shrink-0 w-24 h-24 -mt-12 bg-center bg-cover rounded-full bg-gray-500" src={profile} />
