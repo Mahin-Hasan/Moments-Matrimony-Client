@@ -32,6 +32,7 @@ const ViewBiodata = () => {
             work: biodata.occupation,
             email: biodata.contactEmail,
             requestedBy: user.email,
+            originalID:biodata._id,
             status: 'pending',
         }
         console.log(premiumRequests);

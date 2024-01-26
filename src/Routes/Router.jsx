@@ -18,6 +18,7 @@ import AdminDashboard from "../pages/AdminDashboard/AdminDashboard";
 import ManageUsers from "../pages/ManageUsers/ManageUsers";
 import ApprovedPremium from "../pages/ApprovedPremium/ApprovedPremium";
 import ApproveContact from "../pages/ApproveContact/ApproveContact";
+import BiodataDetails from "../pages/BiodataDetails/BiodataDetails";
 
 export const router = createBrowserRouter([
     {
@@ -31,6 +32,11 @@ export const router = createBrowserRouter([
             {
                 path: 'biodatas',
                 element: <BioDatas></BioDatas>
+            },
+            {
+                path: 'biodataDetails/:id',
+                element: <BiodataDetails></BiodataDetails>,
+                loader: ({ params }) => fetch(`http://localhost:5001/biodatas/${params.id}`)
             },
             {
                 path: 'about',
