@@ -37,7 +37,7 @@ export const router = createBrowserRouter([
             {
                 path: 'biodataDetails/:id',
                 element: <BiodataDetails></BiodataDetails>,
-                loader: ({ params }) => fetch(`http://localhost:5001/biodatas/${params.id}`)
+                loader: ({ params }) => fetch(`https://moments-matrimony-server.onrender.com/biodatas/${params.id}`)
             },
             {
                 path: 'about',
@@ -73,7 +73,7 @@ export const router = createBrowserRouter([
             {
                 path: 'updateBiodata/:id',
                 element: <UpdateBiodata></UpdateBiodata>,
-                loader: ({ params }) => fetch(`http://localhost:5001/biodatas/${params.id}`)
+                loader: ({ params }) => fetch(`https://moments-matrimony-server.onrender.com/biodatas/${params.id}`)
             },
             {
                 path: 'viewBiodata',
