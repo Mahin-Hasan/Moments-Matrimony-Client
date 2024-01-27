@@ -13,7 +13,6 @@ const CheckOut = () => {
     return (
         <div>
             <TitleCaption title={'Check Out Form'}></TitleCaption>
-            <h1>params: {id}</h1>
             <div>
                 <Elements stripe={stripePromise}>
                     <CheckOutFrom id={id}></CheckOutFrom>
