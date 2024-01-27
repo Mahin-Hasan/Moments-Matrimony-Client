@@ -3,9 +3,12 @@ import TitleCaption from "../../components/TitleCaption/TitleCaption";
 import useAxiosPublic from "../../hooks/useAxiosPublic";
 import { RiDeleteBin6Fill } from "react-icons/ri";
 import Swal from "sweetalert2";
+import useAuth from "../../hooks/useAuth";
 
 const FavouriteBio = () => {
     const axiosPublic = useAxiosPublic();
+    const { user } = useAuth();
+
     const { data: favourite = [], refetch } = useQuery({
         queryKey: ['favourite'],
         queryFn: async () => {
@@ -13,8 +16,9 @@ const FavouriteBio = () => {
             return res.data;
         }
     })
+    const userFilter = favourite.filter(fav => fav.favouritedBy=== `${user.email}`);
 
-    // delete functionality
+    // delete functionality 
     const handleDeleteFavourite = favItem => {
         Swal.fire({
             title: "Remove Favourite?",
@@ -57,7 +61,7 @@ const FavouriteBio = () => {
 
                         <tbody className="divide-y divide-gray-200">
                             {
-                                favourite.map(favItem => <tr key={favItem._id}>
+                                userFilter.map(favItem => <tr key={favItem._id}>
                                     <td className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">{favItem.favBioId}</td>
                                     <td className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">{favItem.favName}</td>
                                     <td className="whitespace-nowrap px-4 py-2 text-gray-700">{favItem.permanentDiv}</td>

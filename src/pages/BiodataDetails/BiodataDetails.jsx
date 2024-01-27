@@ -1,4 +1,4 @@
-import { useLoaderData } from 'react-router-dom';
+import { Link, useLoaderData } from 'react-router-dom';
 import TitleCaption from '../../components/TitleCaption/TitleCaption';
 import useBiodata from '../../hooks/useBiodata';
 import { FaHeart } from "react-icons/fa";
@@ -9,23 +9,67 @@ import Swal from 'sweetalert2';
 const BiodataDetails = () => {
     const bioDataDetail = useLoaderData();
 
-    const [biodatas,,refetch] = useBiodata();
+    const [biodatas, , refetch] = useBiodata();
     const { user } = useAuth();
     const axiosPublic = useAxiosPublic();
 
 
 
-    const { biodataID, biodataType, yourName, profileImg, dateOfBirth, yourHeight, yourWeight, yourAge, occupation, race, fathersName, mothersName, permanentDivision, presentDivision, expectedPartnerAge, expectedPartnerHeight, contactEmail, mobileNumber, expectedPartnerWeight } = bioDataDetail;
+    const { biodataID, biodataType, yourName, profileImg, dateOfBirth, yourHeight, yourWeight, yourAge, occupation, race, fathersName, mothersName, permanentDivision, presentDivision, expectedPartnerAge, expectedPartnerHeight, contactEmail, mobileNumber, expectedPartnerWeight, isFavourite } = bioDataDetail;
     const isPremium = false; // later change it with dynamic checking method
-    const isLiked = true; // implement later 
+    const isLiked = !!isFavourite; // implement later 
     const heartClass = `text-${isLiked ? 'red-700' : 'blue-500'} text-xl`;
 
-    //
+    //add filter by male female
     const genderFilter = biodatas.filter(biodata => biodata.biodataType === `${biodataType}`);
     console.log(biodatas);
     console.log(genderFilter);
 
-    const handleMakeFavourite = likedBio =>{
+    // for detailed fav
+    const handleDetailFavourite = item => {
+        console.log(item);
+        const favouriteUser = {
+            favBioId: item.biodataID,
+            favName: item.yourName,
+            permanentDiv: item.permanentDivision,
+            favWork: item.occupation,
+            favouritedBy: user.email,
+            originalID: item._id,
+            isFavourite: 'true'
+        }
+        console.log(favouriteUser);
+        Swal.fire({
+            title: "Add to Favourates?",
+            text: `Add ${item.yourName} to your Favourates`,
+            icon: "success",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes, Add to My Favourite"
+        }).then((result) => {
+            if (result.isConfirmed) {
+                axiosPublic.post(`/favourite`, favouriteUser)
+                    .then(res => {
+                        if (res.data.insertedId) {
+                            axiosPublic.patch(`/biodatas/favourite/${item._id}`)
+                                .then(res => {
+                                    if (res.data.modifiedCount > 0) {
+                                        refetch();
+                                    }
+                                })
+                            refetch();
+                            Swal.fire({
+                                title: "Success!",
+                                text: `${item.yourName} has ben added to favourates`,
+                                icon: "success"
+                            });
+                        }
+                    })
+            }
+        });
+    }
+    // for filtered fav
+    const handleMakeFavourite = likedBio => {
         console.log(likedBio);
 
         const favouriteUser = {
@@ -34,7 +78,7 @@ const BiodataDetails = () => {
             permanentDiv: likedBio.permanentDivision,
             favWork: likedBio.occupation,
             favouritedBy: user.email,
-            originalID:likedBio._id,
+            originalID: likedBio._id,
             isFavourite: 'true'
         }
         console.log(favouriteUser);
@@ -48,7 +92,7 @@ const BiodataDetails = () => {
             confirmButtonText: "Yes, Add to My Favourite"
         }).then((result) => {
             if (result.isConfirmed) {
-                axiosPublic.post(`/favourite`,favouriteUser)
+                axiosPublic.post(`/favourite`, favouriteUser)
                     .then(res => {
                         if (res.data.insertedId) {
                             refetch();
@@ -61,6 +105,7 @@ const BiodataDetails = () => {
                     })
             }
         });
+
     }
 
     return (
@@ -96,6 +141,7 @@ const BiodataDetails = () => {
                                     <div className='absolute top-0 right-0 mr-3 mt-3'>
 
                                         <button
+                                            onClick={() => handleDetailFavourite(bioDataDetail)}
                                             className="inline-block rounded-full  bg-white border-2 border-red-600 p-3 text-red-600 hover:bg-pink-300 hover:text-white focus:outline-none focus:ring active:bg-indigo-500"
                                         >
                                             <FaHeart className={heartClass} />
@@ -133,12 +179,13 @@ const BiodataDetails = () => {
                                             :
                                             <>
                                                 <p className='text-blue-500 my-4'>!! Add premium subscription to view contact !!</p>
-                                                <button type="button" className="relative w-full px-8 py-4 overflow-hidden font-semibold rounded bg-blue-700 text-gray-50">Request Contact Information
-                                                    <span className="absolute top-0 right-0 px-6 py-1 text-xs tracki text-center uppercase whitespace-no-wrap origin-bottom-left transform rotate-45 -translate-y-full translate-x-1/3 bg-sky-500">REQ</span>
-                                                </button>
+                                                <Link  to={`/dashboard/checkout/${biodataID}`}>
+                                                    <button type="button" className="relative w-full px-8 py-4 overflow-hidden font-semibold rounded bg-blue-700 text-gray-50">Request Contact Information
+                                                        <span className="absolute top-0 right-0 px-6 py-1 text-xs tracki text-center uppercase whitespace-no-wrap origin-bottom-left transform rotate-45 -translate-y-full translate-x-1/3 bg-sky-500">REQ</span>
+                                                    </button>
+                                                </Link>
                                             </>
                                     }
-
                                 </span>
                             </li>
                         </ul>
@@ -150,7 +197,7 @@ const BiodataDetails = () => {
                     <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 mx-2">
                         {/* show gender */}
                         {
-                            genderFilter.map(item => <div key={item._id} className="rounded-lg bg-gray-200">
+                            genderFilter.map(item => <div key={item._id} className="rounded-lg bg-gray">
                                 <article
                                     className="hover:animate-background rounded-xl bg-gradient-to-r from-green-300 via-blue-500 to-purple-600 p-0.5 shadow-xl transition hover:bg-[length:400%_400%] hover:shadow-sm hover:[animation-duration:_4s]"
                                 >
@@ -165,14 +212,14 @@ const BiodataDetails = () => {
                                         <time className="block text-xs text-blue-600 font-semibold mt-3"> DOB: {item.dateOfBirth} </time>
 
                                         <a href="#">
-                                            <h3 className="mt-0.5 text-base font-medium text-gray-900">
-                                                My Occupation {item.occupation}
+                                            <h3 className="mt-0.5 text-sm font-medium text-gray-900">
+                                                Occupation {item.occupation}
                                             </h3>
                                         </a>
 
                                         <div className="mt-4 flex flex-wrap gap-1">
                                             <button
-                                            onClick={()=>handleMakeFavourite(item)}
+                                                onClick={() => handleMakeFavourite(item)}
                                                 className="group inline-block rounded-full w-full bg-gradient-to-r from-pink-500 via-red-500 to-yellow-500 p-[2px] hover:text-white focus:outline-none focus:ring active:text-opacity-75"
                                             >
                                                 <span

@@ -19,6 +19,7 @@ import ManageUsers from "../pages/ManageUsers/ManageUsers";
 import ApprovedPremium from "../pages/ApprovedPremium/ApprovedPremium";
 import ApproveContact from "../pages/ApproveContact/ApproveContact";
 import BiodataDetails from "../pages/BiodataDetails/BiodataDetails";
+import CheckOut from "../pages/CheckOut/CheckOut";
 
 export const router = createBrowserRouter([
     {
@@ -82,6 +83,10 @@ export const router = createBrowserRouter([
             {
                 path: 'contactRequest',
                 element: <ContactRequest></ContactRequest>
+            },
+            {
+                path: 'checkout/:id',
+                element: <CheckOut></CheckOut>
             },
             {
                 path: 'favouriteBiodata',

@@ -6,9 +6,12 @@ import { RiDeleteBin6Fill } from "react-icons/ri";
 import { FaEdit } from "react-icons/fa";
 import useBiodata from "../../hooks/useBiodata";
 import Swal from "sweetalert2";
+import useAuth from "../../hooks/useAuth";
 
 const EditBiodata = () => {
     const axiosPublic = useAxiosPublic();
+    const { user } = useAuth();
+
     const [biodatas, , refetch] = useBiodata(); //2nd parameter empty cz not using
     // const { data: biodatas = [], refetch } = useQuery({
     //     queryKey: ['biodatas'],
@@ -17,6 +20,7 @@ const EditBiodata = () => {
     //         return res.data;
     //     }
     // })
+    const emailFilter = biodatas.filter(biodata => biodata.contactEmail === `${user.email}`);
 
 
     //delete function
@@ -85,7 +89,7 @@ const EditBiodata = () => {
 
                         <tbody className="divide-y divide-gray-200">
                             {
-                                biodatas.map((biodata, idx) => <tr key={biodata._id}>
+                                emailFilter.map((biodata, idx) => <tr key={biodata._id}>
                                     <td className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">{idx + 1}</td>
                                     <td className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">
                                         <img
