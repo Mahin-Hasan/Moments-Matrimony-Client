@@ -5,6 +5,7 @@ import { FaHeart } from "react-icons/fa";
 import useAuth from '../../hooks/useAuth';
 import useAxiosPublic from '../../hooks/useAxiosPublic';
 import Swal from 'sweetalert2';
+import usePremium from '../../hooks/usePremium';
 
 const BiodataDetails = () => {
     const bioDataDetail = useLoaderData();
@@ -13,10 +14,11 @@ const BiodataDetails = () => {
     const { user } = useAuth();
     const axiosPublic = useAxiosPublic();
 
-
+    const[isPremium] = usePremium();
+    // console.log(isPremium);
 
     const { biodataID, biodataType, yourName, profileImg, dateOfBirth, yourHeight, yourWeight, yourAge, occupation, race, fathersName, mothersName, permanentDivision, presentDivision, expectedPartnerAge, expectedPartnerHeight, contactEmail, mobileNumber, expectedPartnerWeight, isFavourite } = bioDataDetail;
-    const isPremium = false; // later change it with dynamic checking method
+    //const isPremium = false; // later change it with dynamic checking method
     const isLiked = !!isFavourite; // implement later 
     const heartClass = `text-${isLiked ? 'red-700' : 'blue-500'} text-xl`;
 
