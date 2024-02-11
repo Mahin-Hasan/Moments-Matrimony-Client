@@ -6,12 +6,35 @@ import TitleCaption from "../../components/TitleCaption/TitleCaption";
 
 
 const BioDatas = () => {
-    // const [asc, setAsc] = useState(true);
-    const [biodatas, , refetch] = useBiodata();
-    console.log(biodatas);
+    const [ageAsc, setAgeAsc] = useState(true);
+    // const [bioIDAsc, setbioIDAsc] = useState(true);
+    const [ageRange, setAgeRange] = useState({ min: 15, max: 50 });
+    const minValue = ageRange.min;
+    const maxValue = ageRange.max;
+    const [searchUser, setSearchUser] = useState('');
 
-
+    const [biodatas, , refetch] = useBiodata(ageAsc, minValue, maxValue,searchUser);
     // console.log(biodatas);
+
+
+    //range slider
+
+    const handleSliderChange = (event) => {
+        setAgeRange({
+            ...ageRange,
+            [event.target.name]: parseInt(event.target.value, 10)
+        });
+    };
+
+    console.log(ageRange);
+
+    const handleSearch = event => {
+        event.preventDefault();
+
+        const searchText = event.target.searchedName.value;
+        console.log(searchText); 
+        setSearchUser(searchText);
+    }
     return (
         <div>
             <TitleCaption title={'All Users Biodatas'}></TitleCaption>
@@ -22,9 +45,18 @@ const BioDatas = () => {
                         <h1>Apply Filters</h1>
                         <ul className="pt-2 pb-4 space-y-1 text-sm">
                             <li className="rounded-sm ">
-                                <button className="flex items-center p-2 space-x-3 rounded-md">
-                                    <span>Age Low To High</span>
-                                </button>
+                                {/* <button className="flex items-center p-2 space-x-3 rounded-md"
+                                    onClick={() => setbioIDAsc(!bioIDAsc)}>
+                                    <span>{bioIDAsc ? 'BioID To Asc' : 'BioID To Desc'}</span>
+                                </button> */}
+                                {/* <button className="flex items-center p-2 space-x-3 rounded-md"
+                                    onClick={() => setAgeAsc(!ageAsc)}>
+                                    <span>{ageAsc ? 'Age High To Low' : 'Age Low To High'}</span>
+                                </button> */}
+                                <form onSubmit={handleSearch}>
+                                    <input type="text" name="searchedName" id="" placeholder="Search Name" />
+                                    <input type="submit" value="Search" />
+                                </form>
                                 <button className="flex items-center p-2 space-x-3 rounded-md">
                                     <span>Male</span>
                                 </button>
@@ -34,6 +66,34 @@ const BioDatas = () => {
                                 <button className="flex items-center p-2 space-x-3 rounded-md">
                                     <span>Division</span>
                                 </button>
+                                {/* Range slider */}
+                                <div className="mt-4">
+                                    <label className="block text-sm font-medium text-gray-700">Age Range</label>
+                                    <div className="mt-1 relative rounded-md shadow-sm">
+                                        <input
+                                            type="range"
+                                            name="min"
+                                            min="15"
+                                            max="50"
+                                            value={ageRange.min}
+                                            onChange={handleSliderChange}
+                                            className="range-slider"
+                                        />
+                                        <span className="absolute right-0 px-2 py-0.5 text-sm text-gray-700">{ageRange.min}</span>
+                                    </div>
+                                    <div className="mt-2 relative rounded-md shadow-sm">
+                                        <input
+                                            type="range"
+                                            name="max"
+                                            min="15"
+                                            max="50"
+                                            value={ageRange.max}
+                                            onChange={handleSliderChange}
+                                            className="range-slider"
+                                        />
+                                        <span className="absolute right-0 px-2 py-0.5 text-sm text-gray-700">{ageRange.max}</span>
+                                    </div>
+                                </div>
                             </li>
                         </ul>
                     </div>

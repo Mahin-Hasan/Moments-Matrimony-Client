@@ -10,7 +10,7 @@ import usePremium from '../../hooks/usePremium';
 const BiodataDetails = () => {
     const bioDataDetail = useLoaderData();
 
-    const [biodatas, , refetch] = useBiodata();
+    const [biodatas, , refetch] = useBiodata(null,null,null);
     const { user } = useAuth();
     const axiosPublic = useAxiosPublic();
 
