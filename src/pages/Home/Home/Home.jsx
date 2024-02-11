@@ -4,18 +4,35 @@ import useBiodata from '../../../hooks/useBiodata';
 import Banner from '../Banner/Banner';
 import PremiumMember from '../PremiumMember/PremiumMember';
 import TitleCaption from '../../../components/TitleCaption/TitleCaption';
+import { useEffect, useState } from 'react';
+import { VerticalTimeline, VerticalTimelineElement } from 'react-vertical-timeline-component';
+import "react-vertical-timeline-component/style.min.css"
+import { IoIosHeartHalf } from "react-icons/io";
+
 
 const Home = () => {
     const [biodatas] = useBiodata();
     const axiosPublic = useAxiosPublic();
     console.log(biodatas);
-    const { data: premium = [], refetch } = useQuery({
+    const { data: premium = [] } = useQuery({
         queryKey: ['premium'],
         queryFn: async () => {
             const res = await axiosPublic.get('/premium');
             return res.data;
         }
     })
+
+
+    //loading json file for Timeline feature
+    const [steps, setSteps] = useState([]);
+
+    useEffect(() => {
+        fetch('steps.json')
+            .then(res => res.json())
+            .then(data => setSteps(data))
+    }, [])
+
+    console.log(steps);
 
 
 
@@ -41,6 +58,32 @@ const Home = () => {
                         </div>
                     </div>
                 </section>
+            </section>
+            {/* Try Timeline Element */}
+            <TitleCaption title={'How It Works'}></TitleCaption>
+            <section className='mb-20 bg-cyan-600'>
+                <VerticalTimeline>
+                    {
+                        steps.map(element => {
+                            return (
+                                <VerticalTimelineElement
+                                    key={element.id}
+                                    date={element.timing}
+                                    dateClassName='date !text-xl !pt-2 text-black lg:text-white'
+                                    iconStyle={{ background: 'rgb(33, 150, 243)', color: '#fff' }}
+                                    icon={<IoIosHeartHalf />}
+                                >
+
+                                    <h3 className='vertical-timeline-element-title font-semibold text-2xl text-blue-600'>{element.step}</h3>
+                                    <img className='w-32 h-32 my-2' src={element.image} alt="" />
+                                    {/* <h5 className='vertical-timeline-element-subtitle font-semibold'>{element.timing}</h5> */}
+                                    <p id='description' className='font-light text-zinc-500'>{element.description}</p>
+
+                                </VerticalTimelineElement>
+                            )
+                        })
+                    }
+                </VerticalTimeline>
             </section>
             <section className='my-20'>
                 <div className="mx-auto max-w-screen-2xl px-4 py-8 sm:px-6 lg:px-8">

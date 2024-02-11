@@ -1,0 +1,45 @@
+[
+    {
+      "id": 1,
+      "step": "Register",
+      "timing": "Timing: 16th Feb, 10:30 AM",
+      "description": "Create your account on the matrimony site by providing basic information about yourself. Set up your profile and preferences to enhance matchmaking.",
+      "image": "https://rn53themes.net/themes/matrimo/images/icon/rings.png"
+    },
+    {
+      "id": 2,
+      "step": "Find Your Match",
+      "timing": "Timing: 17th Feb, 1:45 PM",
+      "description": "Explore profiles of potential matches based on your preferences. Utilize search filters to narrow down the options and find someone compatible.",
+      "image": "https://rn53themes.net/themes/matrimo/images/icon/wedding-2.png"
+    },
+    {
+      "id": 3,
+      "step": "Send Interest",
+      "timing": "Timing: 18th Feb, 4:15 PM",
+      "description": "Express your interest in someone by sending a notification. This allows the other person to know that you are interested in getting to know them better.",
+      "image": "https://rn53themes.net/themes/matrimo/images/icon/love-birds.png"
+    },
+    {
+      "id": 4,
+      "step": "Get Profile Information",
+      "timing": "Timing: 20th Feb, 2:30 PM",
+      "description": "Once your interest is reciprocated, you can access more detailed information about the person's profile. Learn more about their background, preferences, and values.",
+      "image": "https://rn53themes.net/themes/matrimo/images/icon/network.png"
+    },
+    {
+      "id": 5,
+      "step": "Start Meetups",
+      "timing": "Timing: 22th Feb, 6:00 PM",
+      "description": "Initiate conversations and plan meetups with your potential match. Building a connection through conversations is crucial before deciding to take the next step.",
+      "image": "https://rn53themes.net/themes/matrimo/images/icon/chat.png"
+    },
+    {
+      "id": 6,
+      "step": "Getting Married",
+      "timing": "Timing: 28th Feb, 8:30 PM",
+      "description": "Once both parties feel a strong connection and compatibility, take the next step towards marriage. Discuss plans, meet families, and embark on the journey of a lifelong commitment.",
+      "image": "https://rn53themes.net/themes/matrimo/images/icon/wedding-couple.png"
+    }
+  ]
+  

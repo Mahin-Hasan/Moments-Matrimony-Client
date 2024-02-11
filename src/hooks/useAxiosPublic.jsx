@@ -2,7 +2,7 @@ import axios from "axios";
 
 
 const axiosPublic = axios.create({
-    baseURL: 'https://moments-matrimony-server.onrender.com'
+    baseURL: 'http://localhost:5001'
 })
 
 const useAxiosPublic = () => {

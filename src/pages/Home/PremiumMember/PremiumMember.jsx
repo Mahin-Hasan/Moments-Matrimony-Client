@@ -14,7 +14,6 @@ const PremiumMember = ({ premiumBiodata }) => {
                 <p>Location: {permanentDiv}</p>
                 <p>Profession{work}</p>
                 <p>Bio ID: {bioId}</p>
-
                 <div className='mt-4'>
                     <Link to={`biodataDetails/${originalID}`}>
                         <button
