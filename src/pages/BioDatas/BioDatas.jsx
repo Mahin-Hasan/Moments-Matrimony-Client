@@ -12,8 +12,10 @@ const BioDatas = () => {
     const minValue = ageRange.min;
     const maxValue = ageRange.max;
     const [searchUser, setSearchUser] = useState('');
+    const [gender, setGender] = useState('');
 
-    const [biodatas, , refetch] = useBiodata(ageAsc, minValue, maxValue,searchUser);
+
+    const [biodatas, , refetch] = useBiodata(ageAsc, minValue, maxValue, searchUser, gender);
     // console.log(biodatas);
 
 
@@ -32,9 +34,18 @@ const BioDatas = () => {
         event.preventDefault();
 
         const searchText = event.target.searchedName.value;
-        console.log(searchText); 
+        console.log(searchText);
         setSearchUser(searchText);
     }
+
+    //gender functionality
+
+    const handleRadioChange = (selectedGender) => {
+        setGender(selectedGender);
+    };
+    console.log(gender);
+    console.log(biodatas);
+
     return (
         <div>
             <TitleCaption title={'All Users Biodatas'}></TitleCaption>
@@ -57,6 +68,38 @@ const BioDatas = () => {
                                     <input type="text" name="searchedName" id="" placeholder="Search Name" />
                                     <input type="submit" value="Search" />
                                 </form>
+                                {/* try gender filter */}
+                                <div>
+                                    {/* <label>
+                                        <input
+                                            type="radio"
+                                            value="ALL"
+                                            checked={gender === ''}
+                                            onChange={() => handleRadioChange('')}
+                                        />
+                                        ALL
+                                    </label> */}
+                                    <label>
+                                        <input
+                                            type="radio"
+                                            value="male"
+                                            checked={gender === 'male'}
+                                            onChange={() => handleRadioChange('male')}
+                                        />
+                                        Male
+                                    </label>
+                                    <label className="ml-2">
+                                        <input
+                                            type="radio"
+                                            value="female"
+                                            checked={gender === 'female'}
+                                            onChange={() => handleRadioChange('female')}
+                                        />
+                                        Female
+                                    </label>
+
+                                    <p>Selected Gender: {gender}</p>
+                                </div>
                                 <button className="flex items-center p-2 space-x-3 rounded-md">
                                     <span>Male</span>
                                 </button>

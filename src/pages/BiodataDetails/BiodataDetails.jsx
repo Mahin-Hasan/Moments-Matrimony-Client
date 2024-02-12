@@ -6,15 +6,18 @@ import useAuth from '../../hooks/useAuth';
 import useAxiosPublic from '../../hooks/useAxiosPublic';
 import Swal from 'sweetalert2';
 import usePremium from '../../hooks/usePremium';
+import useFavourite from '../../hooks/useFavourite';
 
 const BiodataDetails = () => {
     const bioDataDetail = useLoaderData();
 
-    const [biodatas, , refetch] = useBiodata(null,null,null);
+    const [biodatas, , refetch] = useBiodata();
+    const [favourite, refetchFavourites] = useFavourite();
+
     const { user } = useAuth();
     const axiosPublic = useAxiosPublic();
 
-    const[isPremium] = usePremium();
+    const [isPremium] = usePremium();
     // console.log(isPremium);
 
     const { biodataID, biodataType, yourName, profileImg, dateOfBirth, yourHeight, yourWeight, yourAge, occupation, race, fathersName, mothersName, permanentDivision, presentDivision, expectedPartnerAge, expectedPartnerHeight, contactEmail, mobileNumber, expectedPartnerWeight, isFavourite } = bioDataDetail;
@@ -55,20 +58,24 @@ const BiodataDetails = () => {
                         if (res.data.insertedId) {
                             axiosPublic.patch(`/biodatas/favourite/${item._id}`)
                                 .then(res => {
+                                    console.log(res);
                                     if (res.data.modifiedCount > 0) {
                                         refetch();
                                     }
                                 })
-                            refetch();
                             Swal.fire({
                                 title: "Success!",
                                 text: `${item.yourName} has ben added to favourates`,
-                                icon: "success"
+                                icon: "success",
+                                showConfirmButton: false,
+                                timer: 1500
                             });
                         }
+                        window.location.reload(true);
                     })
             }
         });
+
     }
     // for filtered fav
     const handleMakeFavourite = likedBio => {
@@ -97,7 +104,7 @@ const BiodataDetails = () => {
                 axiosPublic.post(`/favourite`, favouriteUser)
                     .then(res => {
                         if (res.data.insertedId) {
-                            refetch();
+                            refetchFavourites();
                             Swal.fire({
                                 title: "Success!",
                                 text: `${likedBio.yourName} has ben added to favourates`,
@@ -181,7 +188,7 @@ const BiodataDetails = () => {
                                             :
                                             <>
                                                 <p className='text-blue-500 my-4'>!! Add premium subscription to view contact !!</p>
-                                                <Link  to={`/dashboard/checkout/${biodataID}`}>
+                                                <Link to={`/dashboard/checkout/${biodataID}`}>
                                                     <button type="button" className="relative w-full px-8 py-4 overflow-hidden font-semibold rounded bg-blue-700 text-gray-50">Request Contact Information
                                                         <span className="absolute top-0 right-0 px-6 py-1 text-xs tracki text-center uppercase whitespace-no-wrap origin-bottom-left transform rotate-45 -translate-y-full translate-x-1/3 bg-sky-500">REQ</span>
                                                     </button>

@@ -3,10 +3,14 @@ import { useState } from "react";
 import useAuth from "../../hooks/useAuth";
 import Swal from "sweetalert2";
 import useAdmin from "../../hooks/useAdmin";
+import { useQuery } from "@tanstack/react-query";
+import useAxiosPublic from "../../hooks/useAxiosPublic";
 
 const Navbar = () => {
     const [isNavOpen, setNavOpen] = useState(false);
     // console.log(isNavOpen);
+    const axiosPublic = useAxiosPublic();
+
     const { user, logOut } = useAuth();
     const [isAdmin] = useAdmin();
     const handleToggleNav = () => {
@@ -24,6 +28,15 @@ const Navbar = () => {
             })
             .catch(error => console.log(error))
     }
+
+    const { data: favourite = [] } = useQuery({
+        queryKey: ['favourite'],
+        queryFn: async () => {
+            const res = await axiosPublic.get('/favourite');
+            return res.data;
+        }
+    })
+    const userFilter = favourite.filter(fav => fav.favouritedBy === `${user?.email}`);
     const navigations = (
         <>
             <li><NavLink to="/" className={({ isActive, isPending }) =>
@@ -84,6 +97,13 @@ const Navbar = () => {
                         {
                             user ?
                                 <div className="flex items-center">
+                                    {
+                                        !isAdmin && <Link to='/dashboard/favouriteBiodata'>
+                                            <button type="button" className="flex items-center p-1 space-x-1.5">
+                                                <span>💜 {userFilter?.length}</span>
+                                            </button>
+                                        </Link>
+                                    }
                                     <div className="relative flex-shrink-0">
                                         <img src={user?.photoURL} alt="" className="w-12 h-12 border rounded-full bg-gray-500 border-gray-300" />
                                         <span className="absolute bottom-0 right-0 w-4 h-4 bg-green-600 border rounded-full text-gray-800 border-gray-50"></span>

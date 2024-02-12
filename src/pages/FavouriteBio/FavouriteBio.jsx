@@ -1,22 +1,24 @@
-import { useQuery } from "@tanstack/react-query";
+// import { useQuery } from "@tanstack/react-query";
 import TitleCaption from "../../components/TitleCaption/TitleCaption";
 import useAxiosPublic from "../../hooks/useAxiosPublic";
 import { RiDeleteBin6Fill } from "react-icons/ri";
 import Swal from "sweetalert2";
 import useAuth from "../../hooks/useAuth";
+import useFavourite from "../../hooks/useFavourite";
 
 const FavouriteBio = () => {
     const axiosPublic = useAxiosPublic();
     const { user } = useAuth();
 
-    const { data: favourite = [], refetch } = useQuery({
-        queryKey: ['favourite'],
-        queryFn: async () => {
-            const res = await axiosPublic.get('/favourite');
-            return res.data;
-        }
-    })
-    const userFilter = favourite.filter(fav => fav.favouritedBy=== `${user.email}`);
+    // const { data: favourite = [], refetch } = useQuery({
+    //     queryKey: ['favourite'],
+    //     queryFn: async () => {
+    //         const res = await axiosPublic.get('/favourite');
+    //         return res.data;
+    //     }
+    // })
+    const [favourite, refetchFavourites] = useFavourite();
+    const userFilter = favourite.filter(fav => fav.favouritedBy=== `${user?.email}`);
 
     // delete functionality 
     const handleDeleteFavourite = favItem => {
@@ -33,7 +35,7 @@ const FavouriteBio = () => {
                 const res = await axiosPublic.delete(`/favourite/${favItem._id}`);
                 console.log(res.data); 
                 if (res.data.deletedCount > 0) {
-                    refetch();
+                    refetchFavourites();
                     Swal.fire({
                         title: "Deleted!",
                         text: `${favItem.favName} has been removed from Favourite.`,
