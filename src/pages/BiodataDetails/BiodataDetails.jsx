@@ -104,7 +104,13 @@ const BiodataDetails = () => {
                 axiosPublic.post(`/favourite`, favouriteUser)
                     .then(res => {
                         if (res.data.insertedId) {
-                            refetchFavourites();
+                            axiosPublic.patch(`/biodatas/favourite/${likedBio._id}`)
+                                .then(res => {
+                                    console.log(res);
+                                    if (res.data.modifiedCount > 0) {
+                                        refetch();
+                                    }
+                                })
                             Swal.fire({
                                 title: "Success!",
                                 text: `${likedBio.yourName} has ben added to favourates`,

@@ -52,33 +52,16 @@ const BioDatas = () => {
             <div className="grid grid-cols-1 gap-4 lg:grid-cols-3 lg:gap-8">
                 <div className=" rounded-lg bg-blue-50">
                     {/* left side */}
-                    <div className="flex-1">
-                        <h1>Apply Filters</h1>
+                    <div className="flex-1 ps-6 pt-2">
+                        <h1 className="text-2xl">Apply Filters</h1>
                         <ul className="pt-2 pb-4 space-y-1 text-sm">
                             <li className="rounded-sm ">
-                                {/* <button className="flex items-center p-2 space-x-3 rounded-md"
-                                    onClick={() => setbioIDAsc(!bioIDAsc)}>
-                                    <span>{bioIDAsc ? 'BioID To Asc' : 'BioID To Desc'}</span>
-                                </button> */}
-                                {/* <button className="flex items-center p-2 space-x-3 rounded-md"
-                                    onClick={() => setAgeAsc(!ageAsc)}>
-                                    <span>{ageAsc ? 'Age High To Low' : 'Age Low To High'}</span>
-                                </button> */}
                                 <form onSubmit={handleSearch}>
-                                    <input type="text" name="searchedName" id="" placeholder="Search Name" />
+                                    <input className="p-2 my-2" type="text" name="searchedName" id="" placeholder="Search Name" />
                                     <input type="submit" value="Search" />
                                 </form>
                                 {/* try gender filter */}
                                 <div>
-                                    {/* <label>
-                                        <input
-                                            type="radio"
-                                            value="ALL"
-                                            checked={gender === ''}
-                                            onChange={() => handleRadioChange('')}
-                                        />
-                                        ALL
-                                    </label> */}
                                     <label>
                                         <input
                                             type="radio"
@@ -97,15 +80,8 @@ const BioDatas = () => {
                                         />
                                         Female
                                     </label>
-
-                                    <p>Selected Gender: {gender}</p>
                                 </div>
-                                <button className="flex items-center p-2 space-x-3 rounded-md">
-                                    <span>Male</span>
-                                </button>
-                                <button className="flex items-center p-2 space-x-3 rounded-md">
-                                    <span>Female</span>
-                                </button>
+                             
                                 <button className="flex items-center p-2 space-x-3 rounded-md">
                                     <span>Division</span>
                                 </button>
